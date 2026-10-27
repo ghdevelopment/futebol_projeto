@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interclasse — Jogadores</title>
+    <link rel="stylesheet" href="/static/estilo.css">
+</head>
+<body>
+    <header>
+        <h1>Campeonato Interclasse</h1>
+        <nav>
+            <a href="/">Times</a>
+            <a href="/jogadores">Jogadores</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="cartao">
+            <h2>Cadastrar jogador(a)</h2>
+            <form method="post" action="/salvar/jogadores">
+                <label>Nome
+                    <input type="text" name="nome" maxlength="80" required>
+                </label>
+                <label>Número da camisa
+                    <input type="number" name="numero_camisa" min="1" max="99">
+                </label>
+                <label>Posição
+                    <select name="posicao">
+                        <option value="">Escolha...</option>
+                        <option value="Goleiro">Goleiro</option>
+                        <option value="Defesa">Defesa</option>
+                        <option value="Meio-campo">Meio-campo</option>
+                        <option value="Ataque">Ataque</option>
+                    </select>
+                </label>
+                <!-- Chave estrangeira: as opções vêm da tabela times. -->
+                <!-- O value enviado é o id do time; o texto mostrado é o nome. -->
+                <label>Time
+                    <select name="time_id" required>
+                        <option value="">Escolha...</option>
+                        {% for time in listar("times", ordem="nome") %}
+                        <option value="{{ time.id }}">{{ time.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <button type="submit">Salvar</button>
+            </form>
+        </section>
+
+        <section class="cartao">
+            <h2>Elencos</h2>
+            <table>
+                <tr>
+                    <th>Camisa</th>
+                    <th>Nome</th>
+                    <th>Posição</th>
+                    <th>Time</th>
+                    <th></th>
+                </tr>
+                <!-- consultar() aceita qualquer SELECT, inclusive com JOIN. -->
+                <!-- t.nome AS time: dá um apelido para não confundir com j.nome -->
+                {% for jogador in consultar("SELECT j.id, j.nome, j.numero_camisa, j.posicao, t.nome AS time
+                                             FROM jogadores j
+                                             JOIN times t ON t.id = j.time_id
+                                             ORDER BY t.nome, j.numero_camisa") %}
+                <tr>
+                    <td>{{ jogador.numero_camisa }}</td>
+                    <td>{{ jogador.nome }}</td>
+                    <td>{{ jogador.posicao }}</td>
+                    <td>{{ jogador.time }}</td>
+                    <td class="acoes">
+                        <form method="post" action="/excluir/jogadores/{{ jogador.id }}">
+                            <button type="submit" class="perigo">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+    </main>
+</body>
+</html>

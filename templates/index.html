@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interclasse — Times</title>
+    <!-- O CSS fica na pasta static -->
+    <link rel="stylesheet" href="/static/estilo.css">
+</head>
+<body>
+    <header>
+        <h1>Campeonato Interclasse</h1>
+        <nav>
+            <a href="/">Times</a>
+            <a href="/jogadores">Jogadores</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="cartao">
+            <h2>Cadastrar time</h2>
+            <!-- action="/salvar/times": grava na tabela times (INSERT) -->
+            <!-- o name de cada campo é IGUAL ao nome da coluna no banco -->
+            <form method="post" action="/salvar/times">
+                <label>Nome do time
+                    <input type="text" name="nome" maxlength="60" required>
+                </label>
+                <label>Turma
+                    <input type="text" name="turma" maxlength="20" placeholder="2º ano A" required>
+                </label>
+                <label>Cor do uniforme
+                    <input type="text" name="cor_uniforme" maxlength="30">
+                </label>
+                <button type="submit">Salvar</button>
+            </form>
+        </section>
+
+        <section class="cartao">
+            <h2>Times cadastrados</h2>
+            <table>
+                <tr>
+                    <th>Time</th>
+                    <th>Turma</th>
+                    <th>Uniforme</th>
+                    <th></th>
+                </tr>
+                <!-- listar("times") traz todas as linhas da tabela times -->
+                {% for time in listar("times", ordem="nome") %}
+                <tr>
+                    <td>{{ time.nome }}</td>
+                    <td>{{ time.turma }}</td>
+                    <td>{{ time.cor_uniforme }}</td>
+                    <td class="acoes">
+                        <a href="/editar_time?id={{ time.id }}">Editar</a>
+                        <!-- action="/excluir/times/3": apaga o time de id 3 (DELETE) -->
+                        <form method="post" action="/excluir/times/{{ time.id }}">
+                            <button type="submit" class="perigo">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+    </main>
+</body>
+</html>

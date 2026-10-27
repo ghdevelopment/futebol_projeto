@@ -1,0 +1,124 @@
+/* estilo.css — aparência do site do grupo (exemplo: interclasse) */
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #eef2ee;
+    color: #1f2a1f;
+}
+
+/* Cabeçalho com o nome do site e o menu */
+header {
+    background-color: #1b5e20;
+    color: white;
+    padding: 16px 24px;
+}
+
+header h1 {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+}
+
+nav a {
+    color: white;
+    margin-right: 16px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Área central da página */
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 16px;
+}
+
+/* Caixa branca em volta de cada parte */
+.cartao {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.cartao h2 {
+    margin-top: 0;
+    color: #1b5e20;
+}
+
+/* Formulários */
+label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+input,
+select {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 4px;
+    padding: 8px;
+    border: 1px solid #b8c4b8;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #1b5e20;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 18px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2e7d32;
+}
+
+/* Botão vermelho para excluir */
+.perigo {
+    background-color: #c62828;
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+.perigo:hover {
+    background-color: #e53935;
+}
+
+/* Tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1px solid #dde5dd;
+}
+
+th {
+    background-color: #f3f7f3;
+}
+
+/* Editar e Excluir lado a lado */
+.acoes {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.acoes form {
+    margin: 0;
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interclasse — Editar time</title>
+    <link rel="stylesheet" href="/static/estilo.css">
+</head>
+<body>
+    <header>
+        <h1>Campeonato Interclasse</h1>
+        <nav>
+            <a href="/">Times</a>
+            <a href="/jogadores">Jogadores</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- O link chega assim: /editar_time?id=3 -->
+        <!-- request.args.id pega o 3, e buscar() traz a linha desse time -->
+        {% set time = buscar("times", request.args.id) %}
+
+        <section class="cartao">
+            {% if time %}
+            <h2>Editar time</h2>
+            <!-- action="/atualizar/times/3": altera o time de id 3 (UPDATE) -->
+            <form method="post" action="/atualizar/times/{{ time.id }}">
+                <!-- _voltar: para onde ir depois de salvar -->
+                <input type="hidden" name="_voltar" value="/">
+
+                <!-- value="..." já mostra o que está gravado no banco -->
+                <label>Nome do time
+                    <input type="text" name="nome" maxlength="60" value="{{ time.nome }}" required>
+                </label>
+                <label>Turma
+                    <input type="text" name="turma" maxlength="20" value="{{ time.turma }}" required>
+                </label>
+                <label>Cor do uniforme
+                    <input type="text" name="cor_uniforme" maxlength="30" value="{{ time.cor_uniforme }}">
+                </label>
+                <button type="submit">Salvar alterações</button>
+                <a href="/">Cancelar</a>
+            </form>
+            {% else %}
+            <h2>Time não encontrado</h2>
+            <p><a href="/">Voltar para a lista de times</a></p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>
